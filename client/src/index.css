@@ -35,14 +35,15 @@ body {
   min-height: 100vh;
 }
 
-#root{
+#root {
   margin: 0 auto;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3rem;
   line-height: 1.1;
 }
+
 
 button {
   border-radius: 8px;
@@ -81,7 +82,33 @@ li {
 
 .sheetList {
   display: flex;
-  justify-content: space-evenly;
+  gap: 2rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table th {
+  background-color: #04AA6D;
+  font-weight: bold;
+}
+
+table td,
+table th {
+  border: 1px solid #ddd;
+  padding: .5rem;
+  text-align: left;
+}
+
+table tr:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.App {
+  margin: 0;
+  padding: 0 2rem;
 }
 
 @media (prefers-color-scheme: light) {
