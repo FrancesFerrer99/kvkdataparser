@@ -19,14 +19,18 @@ export default function IndexPage() {
 
         const savedFile = localStorage.getItem('currentFile');
         const savedSheet = localStorage.getItem('currentSheet');
-        if (savedFile) {
+        if (savedFile && savedSheet) {
             setCurrentFile(savedFile);
-            if (savedSheet) {
-                setCurrentSheet(savedSheet);
-                fetchSheetNames(savedFile);
-            }
+            setCurrentSheet(savedSheet);
         }
     }, []);
+
+    useEffect(()=>{
+        if(currentFile && currentSheet){
+            fetchSheetNames(currentFile)
+            handleSheetClick(currentFile, currentSheet)
+        }
+    },[currentFile, currentSheet])
 
     const fetchSheetNames = (filePath) => {
         axios.get(`/sheets?filePath=${encodeURIComponent(filePath)}`, { withCredentials: true })
@@ -34,7 +38,7 @@ export default function IndexPage() {
                 const { sheetNames } = response.data;
                 setSheetNames(sheetNames);
                 if (currentSheet) {
-                    handleSheetClick(filePath, /*currentSheet*/sheetNames[0]);
+                    handleSheetClick(filePath, currentSheet);
                 } else if (sheetNames.length > 0) {
                     handleSheetClick(filePath, sheetNames[0]);
                 }
