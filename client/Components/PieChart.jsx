@@ -1,5 +1,6 @@
 import { Chart, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Pie } from "react-chartjs-2"
+import { NumericFormat } from 'react-number-format'
 
 export default function PieChart({ T4, T5, totalKp }) {
     const isEmpty = T4 === 0 && T5 === 0
@@ -50,7 +51,7 @@ export default function PieChart({ T4, T5, totalKp }) {
 
     return (
         <div>
-            Total kp: {totalKp}
+            Total kp: <NumericFormat value={totalKp} displayType='text' thousandSeparator={true} />
             {!isEmpty ? <Pie data={data} options={options} /> : <h2>No kp gain</h2>}
         </div>
 

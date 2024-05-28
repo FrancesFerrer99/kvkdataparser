@@ -1,9 +1,11 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, Navigate } from "react-router-dom"
 import PieChart from "../Components/PieChart";
 import LineChart from "../Components/LineChart";
 import GaugeChart from "../Components/GaugeChart";
+import { useState } from "react";
 
 export default function UserPage() {
+    const [redirect, setRedirect] = useState(false)
     const { state } = useLocation()
     const {
         "Governor Name": governorName,
@@ -25,8 +27,10 @@ export default function UserPage() {
         "Expected deads": goalDeads
     } = state;
 
+    if(redirect) return <Navigate to='/'/>
+
     return (
-        <div className="user-page-layout">
+        <div className="user-page-layout relative">
             <div className="header">
                 <h2>Name: {governorName}</h2>
                 <h3 className="id">Id: {governorId}</h3>
@@ -38,8 +42,12 @@ export default function UserPage() {
             </div>
             <div className="performance">
                 <PieChart T4={T4} T5={T5} totalKp={totalKp} className="pie-chart" />
-                <GaugeChart values={{ sevWounds: T4 + T5, goalWounds, goalDeads, totalDeads }} className="goals-chart" />
+                <GaugeChart values={{ achieved: T4 + T5, goal: goalWounds, labels: ["% achieved", "% not achieved"], title: "Sev wounds goal" }} className="goals-chart" />
+                <GaugeChart values={{ goal: goalDeads, achieved: totalDeads, labels: ["% achieved", "% not achieved"], title: "deads goal" }} className="goals-chart" />
             </div>
+            <button className="go-back" onClick={()=>setRedirect(true)}>
+                Indietro
+            </button>
         </div>
     )
 }

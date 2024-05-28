@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { Link } from 'react-router-dom';
+import { NumericFormat } from 'react-number-format';
 
 export default function IndexPage() {
     const [data, setData] = useState([]);
@@ -25,12 +26,12 @@ export default function IndexPage() {
         }
     }, []);
 
-    useEffect(()=>{
-        if(currentFile && currentSheet){
+    useEffect(() => {
+        if (currentFile && currentSheet) {
             fetchSheetNames(currentFile)
             handleSheetClick(currentFile, currentSheet)
         }
-    },[currentFile, currentSheet])
+    }, [currentFile, currentSheet])
 
     const fetchSheetNames = (filePath) => {
         axios.get(`/sheets?filePath=${encodeURIComponent(filePath)}`, { withCredentials: true })
@@ -156,7 +157,13 @@ export default function IndexPage() {
                             {filteredData.map((row, index) => (
                                 <tr key={index}>
                                     {Object.values(row).map((value, idx) => (
-                                        <td key={idx}>{currentSheet == 'FinalStats' && idx == 0 ? <Link to='/user' state={row} >{value}</Link> : value}</td>
+                                        <td key={idx}>
+                                            {
+                                                currentSheet == 'FinalStats' && idx == 0 ? <Link to='/user' state={row} >{value}</Link> 
+                                                    : typeof(value) === 'number' && idx != 1 ? <NumericFormat value={value} displayType='text' thousandSeparator={true}/>
+                                                    : value
+                                            }
+                                        </td>
                                     ))}
                                 </tr>
                             ))}
