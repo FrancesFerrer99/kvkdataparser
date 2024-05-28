@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom"
 import PieChart from "../Components/PieChart";
 import LineChart from "../Components/LineChart";
+import GaugeChart from "../Components/GaugeChart";
 
 export default function UserPage() {
     const { state } = useLocation()
@@ -18,17 +19,27 @@ export default function UserPage() {
         "Deads gain KL": endDeads,
         "T4 kill gain": T4,
         "T5 kill gain": T5,
-        "Kills (T4+)": killsT4Plus
+        "TOTAL DEATHS": totalDeads,
+        "TOTAL KP": totalKp,
+        "Expected sev wounds": goalWounds,
+        "Expected deads": goalDeads
     } = state;
+
     return (
-        <div className="container">
-            <h2>Name: {governorName}</h2>
-            <h3 className="id">Id: {governorId}</h3>
-            {/* KP GAIN BREAKDOWN */}
-            <PieChart T4={T4} T5={T5} />
-            <LineChart values={{ pre:prePower, preKl:preKlPower, end:endPower, label:"power", chartTitle:"Power change"}} />
-            <LineChart values={{ pre:preKp, preKl:preKlKp+preKp, end:endKp+preKlKp+preKp, label:"Kill points", chartTitle:"Kill point change" }} />
-            <LineChart values={{ pre:preDeads, preKl:preKlDeads+preDeads, end:endDeads+preKlDeads+preDeads, label:"Dead troops", chartTitle:"Dead troops change" }} />
+        <div className="user-page-layout">
+            <div className="header">
+                <h2>Name: {governorName}</h2>
+                <h3 className="id">Id: {governorId}</h3>
+            </div>
+            <div className="line-charts">
+                <LineChart values={{ pre: prePower, preKl: preKlPower, end: endPower, label: "power", chartTitle: "Power change" }} className="line-chart" />
+                <LineChart values={{ pre: preKp, preKl: preKlKp + preKp, end: endKp + preKlKp + preKp, label: "Kill points", chartTitle: "Kill point change" }} className="line-chart" />
+                <LineChart values={{ pre: preDeads, preKl: preKlDeads + preDeads, end: endDeads + preKlDeads + preDeads, label: "Dead troops", chartTitle: "Dead troops change" }} className="line-chart" />
+            </div>
+            <div className="performance">
+                <PieChart T4={T4} T5={T5} totalKp={totalKp} className="pie-chart" />
+                <GaugeChart values={{ sevWounds: T4 + T5, goalWounds, goalDeads, totalDeads }} className="goals-chart" />
+            </div>
         </div>
     )
 }

@@ -111,6 +111,28 @@ table tr:hover {
   padding: 0 2rem;
 }
 
+canvas {
+  max-width: 280px;
+  max-height: 280px;
+  margin: 1rem 0;
+}
+
+.user-layout {
+  min-width: 100vw;
+}
+
+.line-charts {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.performance {
+  display: flex;
+  justify-content: space-around;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

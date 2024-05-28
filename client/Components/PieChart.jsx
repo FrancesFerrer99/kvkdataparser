@@ -1,7 +1,7 @@
 import { Chart, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Pie } from "react-chartjs-2"
 
-export default function PieChart({ T4, T5 }) {
+export default function PieChart({ T4, T5, totalKp }) {
     const isEmpty = T4 === 0 && T5 === 0
     Chart.register(ArcElement, Tooltip, Legend, Title);
     Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(0, 0, 156)';
@@ -49,9 +49,10 @@ export default function PieChart({ T4, T5 }) {
     };
 
     return (
-        <>
+        <div>
+            Total kp: {totalKp}
             {!isEmpty ? <Pie data={data} options={options} /> : <h2>No kp gain</h2>}
-        </>
+        </div>
 
     )
 }
