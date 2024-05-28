@@ -20,7 +20,8 @@ export default function GaugeChart({ values }) {
         circumference: 180,
         plugins: {
             legend: {
-                display: false
+                display: true,
+                position:'top'
             },
             title: {
                 display: true,
@@ -31,8 +32,8 @@ export default function GaugeChart({ values }) {
                     label: function (context) {
                         const index = context.dataIndex;
                         const value = data.datasets[0].data[index].toFixed(2);
-                        //const label = labels[Math.floor(index / 2)];`${label}
-                        return `: ${value}%`;
+                        const label = labels[index];
+                        return `${label}: ${value}%`;
                     }
                 }
             }

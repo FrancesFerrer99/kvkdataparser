@@ -29,6 +29,10 @@ export default function LineChart({ values }) {
     const options = {
         responsive: true,
         plugins: {
+            legend: {
+                position: 'bottom',
+                display: true
+            },
             title: {
                 display: true,
                 text: `${chartTitle}`
