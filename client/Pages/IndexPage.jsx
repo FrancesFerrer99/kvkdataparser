@@ -77,8 +77,6 @@ export default function IndexPage() {
                 const data = new Uint8Array(response.data);
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheet = workbook.Sheets[sheetName];
-                const cell = sheet['P2']
-                console.log(cell)
                 const jsonData = XLSX.utils.sheet_to_json(sheet, {raw:false});
                 setData(jsonData);
                 setFilteredData(jsonData);
