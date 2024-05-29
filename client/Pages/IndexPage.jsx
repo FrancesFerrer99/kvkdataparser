@@ -77,7 +77,9 @@ export default function IndexPage() {
                 const data = new Uint8Array(response.data);
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheet = workbook.Sheets[sheetName];
-                const jsonData = XLSX.utils.sheet_to_json(sheet);
+                const cell = sheet['P2']
+                console.log(cell)
+                const jsonData = XLSX.utils.sheet_to_json(sheet, {raw:false});
                 setData(jsonData);
                 setFilteredData(jsonData);
                 setCurrentFile(filePath);
@@ -154,19 +156,21 @@ export default function IndexPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredData.map((row, index) => (
-                                <tr key={index}>
-                                    {Object.values(row).map((value, idx) => (
-                                        <td key={idx}>
-                                            {
-                                                currentSheet == 'FinalStats' && idx == 0 ? <Link to='/user' state={row} >{value}</Link> 
-                                                    : typeof(value) === 'number' && idx != 1 ? <NumericFormat value={value} displayType='text' thousandSeparator={true}/>
-                                                    : value
-                                            }
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
+                            {
+                                filteredData.map((row, index) => (
+                                    <tr key={index}>
+                                        {
+                                            Object.values(row).map((value, idx) => (
+                                                <td key={idx}>
+                                                    {
+                                                        currentSheet == 'FinalStats' && idx == 0 ? <Link to='/user' state={row} >{value}</Link>
+                                                            : typeof (value) === 'number' && idx != 1 ? <NumericFormat value={value} displayType='text' thousandSeparator={true} />
+                                                                : value
+                                                    }
+                                                </td>
+                                            ))}
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </>

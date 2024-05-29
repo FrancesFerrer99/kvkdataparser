@@ -18,7 +18,7 @@ export default function LineChart({ values }) {
         datasets: [
             {
                 label: `${label}`,
-                data: [pre, preKl, end],
+                data: [parseInt(pre), parseInt(preKl), parseInt(end)],
                 fill: false,
                 backgroundColor: "rgba(75,192,192,0.2)",
                 borderColor: "rgba(75,192,192,1)"

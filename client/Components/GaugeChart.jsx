@@ -7,8 +7,8 @@ export default function GaugeChart({ values }) {
         labels: ["% achieved", "% to reach goal"],
         datasets: [{
             data: [
-                Math.min(achieved / goal * 100, 100), // Upper gauge (sev wounds %)
-                100 - Math.min(achieved / goal * 100, 100), // Remaining part of upper gauge
+                Math.min(parseInt(achieved) / parseInt(goal) * 100, 100), // Upper gauge (sev wounds %)
+                100 - Math.min(parseInt(achieved) / parseInt(goal) * 100, 100), // Remaining part of upper gauge
             ],
             backgroundColor: ['#7BC043', '#FF6384'],
             borderWidth: 2
