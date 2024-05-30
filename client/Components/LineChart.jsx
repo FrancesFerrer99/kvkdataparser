@@ -13,12 +13,19 @@ ChartJS.register(
 
 export default function LineChart({ values }) {
     const { pre, preKl, end, label, chartTitle } = values
+    const valuePre = parseInt(pre.concat('').replaceAll(',', ''))
+    const valuePreKl = parseInt(preKl.concat('').replaceAll(',', ''))
+    const valueEnd = parseInt(end.concat('').replaceAll(',', ''))
+
+    const chartValues = label === 'power' ? [valuePre, valuePreKl, valueEnd]
+        : [valuePre, valuePre + valuePreKl, valueEnd + valuePre + valuePreKl]
+
     const data = {
         labels: ["Pre kvk", "Pre KL", "Post KL"],
         datasets: [
             {
                 label: `${label}`,
-                data: [parseInt(pre), parseInt(preKl), parseInt(end)],
+                data: chartValues,
                 fill: false,
                 backgroundColor: "rgba(75,192,192,0.2)",
                 borderColor: "rgba(75,192,192,1)"

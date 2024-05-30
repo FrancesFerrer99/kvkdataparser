@@ -3,7 +3,11 @@ import { Pie } from "react-chartjs-2"
 import { NumericFormat } from 'react-number-format'
 
 export default function PieChart({ T4, T5, totalKp }) {
-    const isEmpty = parseInt(T4) === 0 && parseInt(T5) === 0
+    const chartValues = [
+        parseInt(T4.concat('').replaceAll(',', '')),
+        parseInt(T5.concat('').replaceAll(',', ''))
+    ]
+    const isEmpty = chartValues[0] === chartValues[1] === 0
     Chart.register(ArcElement, Tooltip, Legend, Title);
     Chart.defaults.plugins.tooltip.backgroundColor = 'rgb(0, 0, 156)';
     Chart.defaults.plugins.legend.position = 'right';
@@ -15,7 +19,7 @@ export default function PieChart({ T4, T5, totalKp }) {
             'T5 kills',
         ],
         datasets: [{
-            data: [parseInt(T4), parseInt(T5)],
+            data: chartValues,
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',

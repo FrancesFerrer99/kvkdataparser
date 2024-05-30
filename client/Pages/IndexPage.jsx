@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { Link } from 'react-router-dom';
-import { NumericFormat } from 'react-number-format';
 
 export default function IndexPage() {
     const [data, setData] = useState([]);
@@ -77,7 +76,7 @@ export default function IndexPage() {
                 const data = new Uint8Array(response.data);
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheet = workbook.Sheets[sheetName];
-                const jsonData = XLSX.utils.sheet_to_json(sheet, {raw:false});
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { raw: false });
                 setData(jsonData);
                 setFilteredData(jsonData);
                 setCurrentFile(filePath);
@@ -113,7 +112,6 @@ export default function IndexPage() {
 
     return (
         <div className="App">
-            <h1>KvK Data Visualizer</h1>
             <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
             <div>
                 <h2>Available Files</h2>
@@ -162,10 +160,10 @@ export default function IndexPage() {
                                                 <td key={idx}>
                                                     {
                                                         currentSheet == 'FinalStats' && idx == 0 ? <Link to='/user' state={row} >{value}</Link>
-                                                            : typeof (value) === 'number' && idx != 1 ? <NumericFormat value={value} displayType='text' thousandSeparator={true} />
-                                                                : value
+                                                            : (idx === 16 || idx === 19) ? value.replaceAll('.', ',')
+                                                                : value.replaceAll(',', '.')
                                                     }
-                                                </td>
+                                                </td> 
                                             ))}
                                     </tr>
                                 ))}
