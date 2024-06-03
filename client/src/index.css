@@ -148,27 +148,43 @@ button:hover {
   color: #f9f9f9;
 }
 
+.go-back,
+.performance,
+.sheetList,
+.line-charts,
+body,
+.header,
+.user {
+  display: flex;
+}
+
 .performance,
 .line-charts {
   flex-wrap: wrap;
 }
-
-.go-back,
-.performance,
-.sheetList,
-body,
-.header {
-  display: flex;
-}
-
+  
 .header {
   justify-content: space-between;
   padding: 1em 1.5rem;
   align-items: center;
+
 }
 
 .header h1 {
   font-size: 2rem;
+}
+
+.user {
+  align-items: center;
+  justify-content: left;
+}
+
+.user > * {
+  margin: 0;
+}
+
+.id {
+  margin-left: 1rem;
 }
 
 @media (prefers-color-scheme: light) {

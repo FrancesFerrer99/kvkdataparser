@@ -1,0 +1,10 @@
+- Add user login
+    -Users tagged as 'Admin' have the possilibity to upload files
+    -Normal users can only visualize data
+- Add governor tracking across different sheets (different seasons)
+- Leaderboard page (current)
+- Add DW alert in UserPage
+    
+- Add Migration control:
+    .- place confirmed migrants and track top300 change
+    .- remove confirmed DWs and track top300 change

@@ -15,11 +15,6 @@ export default function App() {
         <Route index element={<IndexPage />} />
         <Route path='/user' element={<UserPage />} />
         <Route path='/leaderboard' element={<LeaderboardPage />} />
-        {
-          /*
-            <Route path='/?' element={<? />} />
-          */
-        }
       </Route>
     </Routes>
   )

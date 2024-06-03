@@ -94,7 +94,7 @@ export default function IndexPage() {
             setFilteredData(data);
         } else {
             const filtered = data.filter(row =>
-                row['Governor Name'] && row['Governor Name'].toLowerCase().includes(term.toLowerCase())
+                row['Governor Name'] && row['Governor Name'].toLowerCase().includes(term.toLowerCase()) || row['Governor ID'] && row['Governor ID'].includes(term)
             );
             setFilteredData(filtered);
         }
@@ -139,7 +139,7 @@ export default function IndexPage() {
                 <>
                     <input
                         type="text"
-                        placeholder="Search by Governor Name"
+                        placeholder="Search by Governor Name or ID"
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
