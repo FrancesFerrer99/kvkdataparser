@@ -38,6 +38,28 @@ app.get('/sheets', (req, res) => {
   res.json({ sheetNames: workbook.SheetNames });
 });
 
+app.get('/kp-stats', (req, res) => {
+  const filePath = req.query.filePath
+  const sheetName = req.query.sheetName
+  const fullPath = path.join(__dirname, filePath)
+  try {
+    const workbook = XLSX.readFile(fullPath)
+    const sheet = workbook.Sheets[sheetName]
+    const jsonData = XLSX.utils.sheet_to_json(sheet)
+    const resData = []
+    jsonData.map((value) => {
+      const kp = value["TOTAL KP"]
+      if (kp) {
+        resData.push({ name: value["Governor Name"], kp: value["TOTAL KP"] })
+      }
+    })
+    res.status(200).json(resData)
+  } catch (error) {
+    res.status(500).json("Error opening file", error)
+  }
+
+})
+
 app.listen(4000, () => {
   console.log('Server started on http://localhost:4000');
 });

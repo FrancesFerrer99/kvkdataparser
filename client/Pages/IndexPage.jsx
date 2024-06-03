@@ -143,6 +143,7 @@ export default function IndexPage() {
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
+                    <Link to='kd-stats' state={{ fileName: currentFile, sheetName: currentSheet }} >Overall KD stats</Link>
                     <table>
                         <thead>
                             <tr>
@@ -163,7 +164,7 @@ export default function IndexPage() {
                                                             : (idx === 16 || idx === 19) ? value.replaceAll('.', ',')
                                                                 : value.replaceAll(',', '.')
                                                     }
-                                                </td> 
+                                                </td>
                                             ))}
                                     </tr>
                                 ))}
