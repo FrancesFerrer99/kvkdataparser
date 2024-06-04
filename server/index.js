@@ -50,7 +50,7 @@ app.get('/kp-stats', (req, res) => {
     jsonData.map((value) => {
       const kp = value["TOTAL KP"]
       if (kp) {
-        resData.push({ name: value["Governor Name"], kp: value["TOTAL KP"] })
+        resData.push({ name: value["Governor Name"], kp: value["TOTAL KP"], deads: value["TOTAL DEATHS"] })
       }
     })
     res.status(200).json(resData)
