@@ -44,7 +44,8 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button,
+.button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -61,12 +62,15 @@ button:disabled {
   cursor: default;
 }
 
-button:hover:enabled {
+button:hover:enabled,
+.button:hover {
   border-color: #646cff;
 }
 
 button:focus:enabled,
-button:focus-visible:enabled {
+button:focus-visible:enabled,
+.button:focus,
+.button:focus-visible:enabled {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -110,7 +114,6 @@ table tr:hover {
   padding: 0 2rem;
 }
 
-
 canvas {
   /*max-width: 350px;
   max-height: 300px;*/
@@ -148,7 +151,8 @@ canvas {
   border-radius: 5px 0 0 5px;
 }
 
-button:hover {
+button:hover,
+.button:hover {
   background-color: #1a1a1a;
   color: #f9f9f9;
 }
@@ -185,7 +189,7 @@ button:hover {
 .user>* {
   margin: 0;
 }
-
+\
 .id {
   margin-left: 1rem;
 }
@@ -193,6 +197,10 @@ button:hover {
 .header,
 .leaderboard {
   padding: 1em 1.5rem;
+}
+
+.button {
+  margin-left: 2rem;
 }
 
 @media (prefers-color-scheme: light) {

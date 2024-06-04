@@ -136,14 +136,15 @@ export default function IndexPage() {
                 </div>
             )}
             {data.length > 0 && (
-                <>
+                <div>
                     <input
                         type="text"
                         placeholder="Search by Governor Name or ID"
                         value={searchTerm}
                         onChange={handleSearchChange}
+                        className='search-bar'
                     />
-                    <Link to='kd-stats' state={{ fileName: currentFile, sheetName: currentSheet }} >Overall KD stats</Link>
+                    <Link to='kd-stats' state={{ fileName: currentFile, sheetName: currentSheet }} className='button'>Overall KD stats</Link>
                     <table>
                         <thead>
                             <tr>
@@ -170,7 +171,7 @@ export default function IndexPage() {
                                 ))}
                         </tbody>
                     </table>
-                </>
+                </div>
             )}
         </div>
     );

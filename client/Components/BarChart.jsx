@@ -12,7 +12,7 @@ export default function BarChart({ values, type, range }) {
         labels: labels,
         datasets: [{
             data: chartValues,
-            backgroundColor: ['rgb(54, 162, 235)'],
+            backgroundColor: 'rgb(54, 162, 235)',
             hoverBackgroundColor: 'rgba(255, 205, 86, 0.2)'
         }],
     };

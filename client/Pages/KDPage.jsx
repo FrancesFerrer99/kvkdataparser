@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, Navigate } from "react-router-dom"
 import { NumericFormat } from "react-number-format"
 import axios from "axios"
 import BarChart from "../Components/BarChart"
@@ -13,6 +13,7 @@ export default function KDPage() {
     const [totalKpGain, setTotalKpGain] = useState(0)
     const [topN, setTopN] = useState(100)
     const [chartType, setChartType] = useState('')
+    const [redirect, setRedirect] = useState(false)
 
     useEffect(() => {
         axios.get(`/kp-stats?filePath=${encodeURIComponent(fileName)}&sheetName=${sheetName}`, { withCredentials: true })
@@ -25,7 +26,7 @@ export default function KDPage() {
     }, [rawChartData])
 
     useEffect(() => {
-        setFilteredData(rawChartData.map(object => ({name: object.name, type: object[chartType]})))
+        setFilteredData(rawChartData.map(object => ({ name: object.name, type: object[chartType] })))
     }, [chartType])
 
     function handleRangeChange(e) {
@@ -36,8 +37,10 @@ export default function KDPage() {
         setChartType(e.target.value)
     }
 
+    if (redirect) return <Navigate to='/' />
+
     return (
-        <div className="leaderboard">
+        <div className="leaderboard relative">
             Kingdom total kp gain: <NumericFormat value={totalKpGain} displayType='text' thousandSeparator={true} />
             <select id="topNSelect" onChange={e => handleRangeChange(e)} value={topN}>
                 <option value={10}>Top 10</option>
@@ -50,7 +53,10 @@ export default function KDPage() {
                 <option value='kp' >KP leaderboard</option>
                 <option value='deads'>Deads leaderboard</option>
             </select>
-            <BarChart values={filteredData} type={chartType} range={topN}/>
+            {chartType && <BarChart values={filteredData} type={chartType} range={topN} />}
+            <button className="go-back" onClick={() => setRedirect(true)}>
+                Indietro
+            </button>
         </div>
     )
 }
