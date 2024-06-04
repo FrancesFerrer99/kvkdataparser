@@ -3,16 +3,16 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export default function BarChart({values, labels}){
-    const sortedValues = values.sort((a, b) => b - a)
-    console.log(sortedValues)
+export default function BarChart({ values, type, range }) {
+    const sortedValues = values.sort((a, b) => b.type - a.type)
+    const labels = sortedValues.map(object => object.name).slice(0, range)
+    const chartValues = sortedValues.map(object => object.type).slice(0, range)
 
     const data = {
         labels: labels,
         datasets: [{
-            data: sortedValues,
+            data: chartValues,
             backgroundColor: ['rgb(54, 162, 235)'],
-            minBarThickness: 20,
             hoverBackgroundColor: 'rgba(255, 205, 86, 0.2)'
         }],
     };
@@ -25,7 +25,7 @@ export default function BarChart({values, labels}){
             },
             title: {
                 display: true,
-                text: 'KP gain leaderboard',
+                text: `${type} gain leaderboard`,
             },
             tooltip: {
                 callbacks: {
@@ -38,16 +38,10 @@ export default function BarChart({values, labels}){
             }
         },
         indexAxis: 'y',
-        /*scales: {
-            x: {
-                beginAtZero: true,
-            },
-        },
-        barPercentage: 0.6,*/
     };
 
 
-    return(
-         <Bar data={data} options={options} />
+    return (
+        <Bar data={data} options={options} />
     )
 }

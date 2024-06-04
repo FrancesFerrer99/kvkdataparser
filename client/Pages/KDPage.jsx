@@ -8,43 +8,49 @@ import BarChart from "../Components/BarChart"
 export default function KDPage() {
     const { state } = useLocation()
     const { fileName, sheetName } = state
-    const [chartData, setChartData] = useState([])
+    const [rawChartData, setRawChartData] = useState([])
+    const [filteredData, setFilteredData] = useState([])
     const [totalKpGain, setTotalKpGain] = useState(0)
-    const [labels, setLabels] = useState([])
     const [topN, setTopN] = useState(100)
-    const [kpValues, setKpValues] = useState([])
-    const [deadsValues, setDeadsValues] = useState([])
+    const [chartType, setChartType] = useState('')
 
     useEffect(() => {
         axios.get(`/kp-stats?filePath=${encodeURIComponent(fileName)}&sheetName=${sheetName}`, { withCredentials: true })
-            .then(res => setChartData(res.data))
+            .then(res => setRawChartData(res.data))
     }, [])
 
     useEffect(() => {
-        let kpGain = chartData.reduce((accumulator, currenValue) => accumulator + currenValue.kp, totalKpGain)
+        let kpGain = rawChartData.reduce((accumulator, currentValue) => accumulator + currentValue.kp, totalKpGain)
         setTotalKpGain(kpGain)
-        setLabels(chartData.map(object => object.name))
-        setKpValues(chartData.map(object => object.kp))
-        setDeadsValues(chartData.map(object => object.deads))
-    }, [chartData])
+    }, [rawChartData])
 
-    function handleSelectChange(e) {
+    useEffect(() => {
+        setFilteredData(rawChartData.map(object => ({name: object.name, type: object[chartType]})))
+    }, [chartType])
+
+    function handleRangeChange(e) {
         setTopN(Number(e.target.value))
     }
 
-    console.log(chartData)
+    function handleChartChange(e) {
+        setChartType(e.target.value)
+    }
 
     return (
         <div className="leaderboard">
             Kingdom total kp gain: <NumericFormat value={totalKpGain} displayType='text' thousandSeparator={true} />
-            <select id="topNSelect" onChange={e => handleSelectChange(e)} value={topN}>
+            <select id="topNSelect" onChange={e => handleRangeChange(e)} value={topN}>
                 <option value={10}>Top 10</option>
                 <option value={20}>Top 20</option>
                 <option value={50}>Top 50</option>
                 <option value={100}>Top 100</option>
             </select>
-           <BarChart values={kpValues.slice(0,topN)} labels={labels.slice(0,topN)} />
-           <BarChart values={deadsValues.slice(0,topN)} labels={labels.slice(0,topN)} />
+            <select id="chartSelect" onChange={e => handleChartChange(e)} value={chartType}>
+                <option defaultChecked>------</option>
+                <option value='kp' >KP leaderboard</option>
+                <option value='deads'>Deads leaderboard</option>
+            </select>
+            <BarChart values={filteredData} type={chartType} range={topN}/>
         </div>
     )
 }
