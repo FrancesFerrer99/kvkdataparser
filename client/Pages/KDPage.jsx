@@ -54,7 +54,9 @@ export default function KDPage() {
                 <option value='kp' >KP leaderboard</option>
                 <option value='deads'>Deads leaderboard</option>
             </select>
-            {chartType && <BarChart values={filteredData} type={chartType} range={topN} />}
+            <div className="bar-chart-container">
+                {chartType && <BarChart values={filteredData} type={chartType} range={topN} />}
+            </div>
             <button className="go-back" onClick={() => setRedirect(true)}>
                 Indietro
             </button>
